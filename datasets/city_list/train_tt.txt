@@ -1,0 +1,10 @@
+train_aachen_000000_000019
+train_aachen_000001_000019
+train_aachen_000002_000019
+train_aachen_000003_000019
+train_aachen_000004_000019
+train_aachen_000005_000019
+train_aachen_000006_000019
+train_aachen_000007_000019
+train_aachen_000008_000019
+train_aachen_000009_000019
