@@ -1,0 +1,94 @@
+
+name: debug
+root: /data/dragoon0905/UniDA_methods/UniSeg
+train: True
+seed: 42
+wandb: false
+
+data:
+
+  num_classes: 13
+
+  source:
+    dataset: 'cityscapes'
+    kwargs:
+      root: /local_datasets/CityScapes
+      list_path: ${root}/datasets/city_list
+      base_size: [1024, 512]
+      crop_size: [1024, 512]
+      random_mirror: True
+      random_crop: False
+      resize: True
+      gaussian_blur: True
+      class_16: False
+      n_class: 13
+
+  target:
+    dataset: 'cityscapes'
+    kwargs:
+      root: /local_datasets/CityScapes
+      list_path: ${root}/datasets/city_list
+      base_size: [1024, 512]
+      crop_size: [1024, 512]
+      random_mirror: True
+      random_crop: False
+      resize: True
+      gaussian_blur: True
+      class_16: False
+      class_13: False
+      n_class: 13
+
+  loader:
+    kwargs:
+      batch_size: 1
+      num_workers: 4
+      pin_memory: True
+
+  source_val_iterations: 100000
+
+model:
+  backbone: deeplabv2
+  imagenet_pretrained: ${root}/pretrained/DeepLab_resnet_pretrained_init-f81d91e8.pth
+  checkpoint: False
+  resume_from_checkpoint: True
+
+opt:
+  kind: "SGD"
+  momentum: 0.9
+  weight_decay: 5e-4
+  lr: 1e-4
+  iterations: 40000
+  poly_power: 0.9
+
+# For auxiliary mode output
+aux: False
+lam_aux: 0.1
+
+# Exponential weighted average of model parameters
+ema_decay: 0.999
+
+# Perturbations
+pseudolabel_threshold: 0.0
+lam_aug: 0.0
+lam_fourier: 0.0
+lam_cutmix: 0.0
+
+# Fourier
+source_fourier: False
+fourier_beta: 0.01
+
+#queue
+queue_length: 65536
+fbs: 256
+bs: 1
+#cluster
+temperature: 0.08
+epsilon: 0.05
+sinkhorn_iterations: 3
+
+k: 30
+MQ_size: 2000
+gamma: 0.7
+mu: 0.7
+temp: 0.1
+lam: 0.1
